@@ -10,7 +10,8 @@ import treeone.profileeditor.command.ProfileEditorCommand;
         id = BuildConstants.PLUGIN_ID,
         version = BuildConstants.VERSION,
         description = ProfileEditorPlugin.DESCRIPTION,
-        authors = {"TreeOne"}
+        authors = {"TreeOne"},
+        url = "https://github.com/tr330ne/ProfileEditor"
 )
 public class ProfileEditorPlugin implements ZenithProxyPlugin {
     public static final String DESCRIPTION = "Customize the Minecraft account's skin, name, and cape.";
