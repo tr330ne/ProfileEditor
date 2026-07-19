@@ -2,6 +2,8 @@
 
 Customize the Minecraft account's skin, name, and cape directly through ZenithProxy.
 
+*NOTE: These changes apply to your minecraft.net profile. Be careful before making any changes, especially if other people have access to the command input on your proxy.*
+
 <img width="255" height="277" alt="Screenshot_1" src="https://github.com/user-attachments/assets/51719300-f4bb-4eb3-9ccd-835d082bd8e5" />
 
 ## Commands
