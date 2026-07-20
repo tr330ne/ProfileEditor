@@ -15,7 +15,7 @@ Customize the Minecraft account's skin, name, and cape directly through ZenithPr
 
 ## Installation
 
-Drop the plugin jar into your ZenithProxy `plugins` folder and restart, or run this command: `plugins download https://github.com/tr330ne/ProfileEditor/releases/download/19.07.26/ProfileEditor-19.07.26.jar`
+Drop the plugin jar into your ZenithProxy `plugins` folder and restart, or run this command: `plugins download https://github.com/tr330ne/ProfileEditor/releases/download/21.07.26/ProfileEditor-21.07.26.jar`
 
 ***Questions:***
 * https://t.me/tr330ne  
