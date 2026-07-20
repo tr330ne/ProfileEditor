@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -389,7 +390,7 @@ public class ProfileEditorCommand extends Command {
         if (changedAt == null || changedAt.isBlank()) return null;
         try {
             return Instant.parse(changedAt).plus(Duration.ofDays(30)).toString();
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             return null;
         }
     }

@@ -7,7 +7,7 @@ import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import treeone.profileeditor.command.ProfileEditorCommand;
 
 @Plugin(
-        id = BuildConstants.PLUGIN_ID,
+        id = "profile-editor",
         version = BuildConstants.VERSION,
         description = ProfileEditorPlugin.DESCRIPTION,
         authors = {"TreeOne"},

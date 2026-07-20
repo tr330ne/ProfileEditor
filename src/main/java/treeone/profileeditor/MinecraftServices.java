@@ -2,6 +2,7 @@ package treeone.profileeditor;
 
 import com.zenith.network.client.Authenticator;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
+import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import static com.zenith.Globals.CONFIG;
 import static com.zenith.Globals.OBJECT_MAPPER;
@@ -48,7 +50,9 @@ public final class MinecraftServices {
             if (code >= 200 && code < 300) {
                 return Optional.of(response.body());
             }
-        } catch (Exception ignored) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch (IOException | IllegalArgumentException ignored) {
         }
         return Optional.empty();
     }
@@ -113,11 +117,12 @@ public final class MinecraftServices {
     }
 
     private static <T> Optional<T> getJson(String token, String path, Function<JsonNode, T> parser) {
-        var result = sendGet(token, path);
+        var result = send(req(token, path).GET().build());
         if (!result.ok()) return Optional.empty();
         try {
             return Optional.ofNullable(parser.apply(OBJECT_MAPPER.readTree(result.body())));
-        } catch (Exception e) {
+        } catch (JacksonException e) {
+            ProfileEditorPlugin.LOG.warn("Failed to parse Minecraft Services response: {}", path, e);
             return Optional.empty();
         }
     }
@@ -153,10 +158,6 @@ public final class MinecraftServices {
         return node != null && !node.isNull() ? node.asString() : null;
     }
 
-    private static ApiResult sendGet(String token, String path) {
-        return send(req(token, path).GET().build());
-    }
-
     private static ApiResult sendJson(String token, String path, String method, String json) {
         return send(req(token, path)
             .header("Content-Type", "application/json")
@@ -177,7 +178,10 @@ public final class MinecraftServices {
         try (var client = newClient()) {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
             return new ApiResult(response.statusCode(), response.body());
-        } catch (Exception e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return new ApiResult(-1, e.getClass().getSimpleName() + ": " + e.getMessage());
+        } catch (IOException e) {
             return new ApiResult(-1, e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
