@@ -357,7 +357,7 @@ public class ProfileEditorCommand extends Command {
             g.drawImage(img, 0, 0, null);
             g.dispose();
             return toPngBytes(rgba);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             return png;
         }
     }
@@ -375,7 +375,7 @@ public class ProfileEditorCommand extends Command {
             g.drawImage(skin.getSubimage(40, 8, 8, 8), 0, 0, size, size, null);
             g.dispose();
             return toPngBytes(head);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
             return null;
         }
     }
@@ -390,7 +390,7 @@ public class ProfileEditorCommand extends Command {
         if (changedAt == null || changedAt.isBlank()) return null;
         try {
             return Instant.parse(changedAt).plus(Duration.ofDays(30)).toString();
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException ignored) {
             return null;
         }
     }

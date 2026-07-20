@@ -50,7 +50,7 @@ public final class MinecraftServices {
             if (code >= 200 && code < 300) {
                 return Optional.of(response.body());
             }
-        } catch (InterruptedException e) {
+        } catch (InterruptedException ignored) {
             Thread.currentThread().interrupt();
         } catch (IOException | IllegalArgumentException ignored) {
         }
@@ -178,10 +178,10 @@ public final class MinecraftServices {
         try (var client = newClient()) {
             var response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
             return new ApiResult(response.statusCode(), response.body());
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return new ApiResult(-1, e.getClass().getSimpleName() + ": " + e.getMessage());
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
+            if (e instanceof InterruptedException) {
+                Thread.currentThread().interrupt();
+            }
             return new ApiResult(-1, e.getClass().getSimpleName() + ": " + e.getMessage());
         }
     }
